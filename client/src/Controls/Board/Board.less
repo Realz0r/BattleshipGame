@@ -1,0 +1,22 @@
+/* Обертка используется для адаптивной верстки, что бы высота всегда была равна ширине */
+.Controls-Board-wrapper {
+  padding-top: 100%;
+  position: relative;
+  outline: 1px solid;
+}
+
+.Controls-Board {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  flex-flow: column;
+}
+
+.Controls-Board_row {
+  height: 100%;
+  display: flex;
+}

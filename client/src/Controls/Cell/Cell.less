@@ -1,0 +1,30 @@
+.Controls-Cell {
+  width: 100%;
+  position: relative;
+  border: 1px solid gainsboro;
+}
+
+.Controls-Cell-style_shipAttacked,
+.Controls-Cell-style_emptyAttacked {
+  &:after, &:before {
+    position: absolute;
+    left: calc(50% - 1px);
+    content: ' ';
+    height: 100%;
+    width: 2px;
+    background-color: #FF0000;
+  }
+
+  &:before {
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+  }
+}
+
+.Controls-Cell-style_shipAttacked,
+.Controls-Cell-style_ship {
+  background: #00ffff;
+}
