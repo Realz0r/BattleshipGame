@@ -22,7 +22,7 @@
     "webpack": "^4.41.5"
   },
   "scripts": {
-    "watch-ts": "tsc client/src/validateLocationShips --outDir client/build -w",
-    "build": "webpack & tsc client/src/validateLocationShips --outDir client/build --lib es6"
+    "build": "webpack & tsc client/src/validateLocationShips --outDir client/build --lib es6",
+    "start": "node app.js"
   }
 }
