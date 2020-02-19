@@ -62,10 +62,10 @@ export default class PlayingField extends Component {
 
                 <div className="Controls-GameField-body">
                     <div className="Controls-GameField-wrapperBoard">
-                        <Board map={this.state.yourMap} onClick={() => this._yourMapClickHandler.call(this)}/>
+                        <Board map={this.state.yourMap} onClick={(...theArgs) => this._yourMapClickHandler.apply(this, theArgs)}/>
                     </div>
                     <div className="Controls-GameField-wrapperBoard">
-                        <Board map={this.state.enemyMap} onClick={() => this._enemyMapClickHandler.call(this)}/>
+                        <Board map={this.state.enemyMap} onClick={(...theArgs) => this._enemyMapClickHandler.apply(this, theArgs)}/>
                     </div>
                 </div>
             </div>
