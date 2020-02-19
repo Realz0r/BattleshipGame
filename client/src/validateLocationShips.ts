@@ -1,3 +1,4 @@
+// @ts-ignore
 import ICellConfig from 'Interfaces/ICellConfig'
 
 export interface IResultValidate {
