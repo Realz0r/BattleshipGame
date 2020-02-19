@@ -1,19 +1,19 @@
-import React, {memo} from 'react';
-import Cell, {ComponentProps as ComponentPropsCell} from 'Controls/Cell';
-import 'Controls/Board/Board.less';
+import React, {memo, HTMLAttributes, MouseEvent} from 'react'
+import Cell from 'Controls/Cell'
+import ICellConfig from 'Interfaces/ICellConfig'
+import 'Controls/Board/Board.less'
 
-export type mapType = Array<Array<ComponentPropsCell>>
-export interface ComponentProps {
+export type mapType = Array<Array<ICellConfig>>
+export interface ComponentProps extends HTMLAttributes<HTMLDivElement> {
     map: mapType
-    onClick?: Function
 }
 
-function renderRow(onClick: Function|void, cells: string[], indexRow: number) {
+function renderRow(onClick: Function|undefined, cells: string[], indexRow: number) {
    return (
        <div className="Controls-Board_row" key={indexRow}>
           {cells.map((cellValue: string, indexCell: number) => {
               return <Cell key={indexCell} {...cellValue}
-                           onClick={(event) => onClick && onClick(indexRow, indexCell, cells[indexCell], event)}/>})}
+                           onClick={(event: MouseEvent<HTMLDivElement>) => onClick && onClick(indexRow, indexCell, cells[indexCell], event)}/>})}
        </div>
    );
 }

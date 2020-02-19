@@ -1,18 +1,18 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {render} from 'react-dom'
 import 'Controls/InfoBox/InfoBox.less'
 
 let infoBoxDOM: HTMLElement;
 let timerAutoHide: number;
 
-function show(content, target?: HTMLElement, delay?: number) {
+function show(content: ReactElement|string, target?: Element, delay?: number) {
     if (!infoBoxDOM) {
         infoBoxDOM = document.createElement('div');
         infoBoxDOM.className = 'Controls-InfoBox Controls-InfoBox_hide';
         document.body.prepend(infoBoxDOM);
     }
 
-    if (target instanceof HTMLElement) {
+    if (target instanceof Element) {
         const coordinatesTarget = target.getBoundingClientRect();
 
         infoBoxDOM.style.left = coordinatesTarget.right + 'px';

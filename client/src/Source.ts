@@ -3,7 +3,7 @@ interface AnswerEventFire {
     isKilled: boolean
 }
 
-function getUrlWithParameters(path, params): URL {
+function getUrlWithParameters(path: string, params: Object): URL {
     const url = new URL(window.location.href + path);
 
     for (let key in params) {
@@ -15,13 +15,12 @@ function getUrlWithParameters(path, params): URL {
     return url;
 }
 
-function createEventSource(paramsUrl, listEvents, eventsCallback: Function): EventSource {
+function createEventSource(paramsUrl: Object, listEvents: string[], eventsCallback: Function): EventSource {
     const url: URL = getUrlWithParameters('battleshipListener', paramsUrl);
     const listenerSource: EventSource = new EventSource(url.toString());
 
     listEvents.forEach((eventName: string) => {
-        // @ts-ignore
-        listenerSource.addEventListener(eventName, ({data}) => {
+        listenerSource.addEventListener(eventName, ({data}: MessageEvent) => {
             eventsCallback(eventName, JSON.parse(data));
         });
     });
@@ -29,7 +28,7 @@ function createEventSource(paramsUrl, listEvents, eventsCallback: Function): Eve
     return listenerSource;
 }
 
-function sendEvent(eventName, params = {}): Promise<AnswerEventFire> {
+function sendEvent(eventName: string, params: Object = {}): Promise<AnswerEventFire> {
     const senderSource: XMLHttpRequest = new XMLHttpRequest();
     const url = getUrlWithParameters('battleship', params);
 

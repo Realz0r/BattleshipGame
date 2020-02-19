@@ -3,12 +3,13 @@
     "target": "es5",
     "jsx": "react",
     "esModuleInterop": true,
+    "downlevelIteration": true,
     "outDir": "client/build",
     "lib": [
       "dom",
       "es5",
       "scripthost",
-      "es2015.promise"
+      "es2015"
     ]
   },
 

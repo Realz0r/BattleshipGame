@@ -1,9 +1,10 @@
-import React from 'react';
-import {render} from 'react-dom';
-import {createEventSource, sendEvent} from './Source';
-import PlayingField from 'Controls/PlayingField';
+import React from 'react'
+import {render} from 'react-dom'
+import {createEventSource, sendEvent} from './Source'
+import PlayingField from 'Controls/PlayingField'
 
 const root: HTMLElement = document.getElementById('root');
+// @ts-ignore
 const gameField: PlayingField = render(
     <PlayingField onClick={(indexRow, indexCell) => sendEvent('fire', {row: indexRow, cell: indexCell})}
                   startGameCallback={openEventStream}/>, root
@@ -15,10 +16,10 @@ if (document.cookie.indexOf('id-player') !== -1) {
 }
 
 function openEventStream(locationOfShips = null): void {
-    const paramsUrl = {locationOfShips: JSON.stringify(locationOfShips)};
+    const paramsUrl: Object = {locationOfShips: JSON.stringify(locationOfShips)};
     const listEvents: string[] = ['gameStarted', 'enemyFire', 'updateStates', 'errorConnection', 'gameEnded'];
 
-    createEventSource(paramsUrl, listEvents, (eventName, params) => {
+    createEventSource(paramsUrl, listEvents, (eventName: string, params) => {
         switch (eventName) {
             case 'gameStarted':
                 gameField.setState(params);

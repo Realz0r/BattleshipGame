@@ -1,12 +1,8 @@
-import React, {memo} from 'react'
+import React, {memo, HTMLAttributes} from 'react'
 import 'Controls/Cell/Cell.less'
+import ICellConfig from 'Interfaces/ICellConfig'
 
-export interface ComponentProps {
-    withShip?: boolean
-    isAttacked?: boolean
-}
-
-export default memo(({withShip = false, isAttacked = false, ...other}: ComponentProps) => {
+export default memo(({withShip = false, isAttacked = false, ...other}: ICellConfig & HTMLAttributes<HTMLDivElement>) => {
     return (
         <div className={`Controls-Cell Controls-Cell-style_${getStyle(withShip, isAttacked)}`} {...other}></div>
     )

@@ -1,12 +1,7 @@
-import React, {memo, ReactElement} from 'react'
+import React, {memo, HTMLAttributes} from 'react'
 import 'Controls/Button/Button.less'
 
-export interface ComponentProps {
-    className?: string,
-    children: ReactElement
-}
-
-export default memo(({className='', children, ...attributes}: ComponentProps) => {
+export default memo(({className='', children, ...attributes}: HTMLAttributes<HTMLDivElement>) => {
     return (
         <div className={'Controls-Button ' + className} {...attributes}>{children}</div>
     )

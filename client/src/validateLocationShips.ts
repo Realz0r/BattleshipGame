@@ -1,22 +1,24 @@
+import ICellConfig from 'Interfaces/ICellConfig'
+
 export interface IResultValidate {
     isValidate: boolean,
     allPlaced: boolean
 }
 
-export default function(locationOfShips): IResultValidate {
+export default function(locationOfShips: Array<Array<ICellConfig>>): IResultValidate {
     let isValidate: boolean = true;
     let ships: number[] = new Array(5).fill(0);
 
     try {
-        locationOfShips.forEach((row, indexRow) => {
+        locationOfShips.forEach((row: ICellConfig[], indexRow: number) => {
             let lengthFoundShip: number = 0;
 
-            row.forEach((cellConfig, indexCell) => {
+            row.forEach((cellConfig: ICellConfig, indexCell: number) => {
                 if (cellConfig.withShip) {
-                    const downRow = locationOfShips[indexRow + 1];
-                    const upRow = locationOfShips[indexRow - 1];
-                    const topCellWithoutShip = !upRow || !upRow[indexCell].withShip;
-                    const bottomCellWithShip = downRow && downRow[indexCell].withShip;
+                    const downRow: ICellConfig[] = locationOfShips[indexRow + 1];
+                    const upRow: ICellConfig[] = locationOfShips[indexRow - 1];
+                    const topCellWithoutShip: boolean = !upRow || !upRow[indexCell].withShip;
+                    const bottomCellWithShip: boolean = downRow && downRow[indexCell].withShip;
 
                     // Проверка на пересечение по диагонали
                     if (downRow && downRow[indexCell + 1] && downRow[indexCell + 1].withShip ||
@@ -27,7 +29,7 @@ export default function(locationOfShips): IResultValidate {
                     if (bottomCellWithShip) {
                         if (topCellWithoutShip) {
                             // Найдем длину корабля по вертикали
-                            let currentIndexRow = indexRow + 2;
+                            let currentIndexRow: number = indexRow + 2;
 
                             while (locationOfShips[currentIndexRow] && locationOfShips[currentIndexRow][indexCell] &&
                             locationOfShips[currentIndexRow][indexCell].withShip) {

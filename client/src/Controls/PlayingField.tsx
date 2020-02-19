@@ -1,11 +1,10 @@
-import React, {Component} from 'react';
-import Board, {mapType} from 'Controls/Board';
-import Button  from 'Controls/Button';
-import {show as showInfoBox}  from 'Controls/InfoBox';
-import 'Controls/PlayingField/PlayingField.less';
-import validateLocationShips, {IResultValidate} from 'validateLocationShips';
-
-import {ComponentProps as ComponentPropsCell} from 'Controls/Cell';
+import React, {Component, MouseEvent} from 'react'
+import Board, {mapType} from 'Controls/Board'
+import Button  from 'Controls/Button'
+import {show as showInfoBox}  from 'Controls/InfoBox'
+import 'Controls/PlayingField/PlayingField.less'
+import validateLocationShips, {IResultValidate} from 'validateLocationShips'
+import ICellConfig from 'Interfaces/ICellConfig'
 
 interface ComponentProps {
     onClick: Function
@@ -25,8 +24,8 @@ export default class PlayingField extends Component {
     state: ComponentStates;
     props: ComponentProps;
 
-    constructor() {
-        super(...arguments);
+    constructor(props) {
+        super(props);
 
         this.state = {
             placementIsFull: false,
@@ -35,9 +34,6 @@ export default class PlayingField extends Component {
             enemyMap: this._getClearMap(),
             isYourMove: null
         };
-
-        this._yourMapClickHandler = this._yourMapClickHandler.bind(this);
-        this._enemyMapClickHandler = this._enemyMapClickHandler.bind(this);
     }
 
     render() {
@@ -66,10 +62,10 @@ export default class PlayingField extends Component {
 
                 <div className="Controls-GameField-body">
                     <div className="Controls-GameField-wrapperBoard">
-                        <Board map={this.state.yourMap} onClick={this._yourMapClickHandler}/>
+                        <Board map={this.state.yourMap} onClick={() => this._yourMapClickHandler.call(this)}/>
                     </div>
                     <div className="Controls-GameField-wrapperBoard">
-                        <Board map={this.state.enemyMap} onClick={this._enemyMapClickHandler}/>
+                        <Board map={this.state.enemyMap} onClick={() => this._enemyMapClickHandler.call(this)}/>
                     </div>
                 </div>
             </div>
@@ -78,7 +74,7 @@ export default class PlayingField extends Component {
 
     enemyFire(indexRow: number, indexCell: number): void {
         const newYourMap: mapType = this.state.yourMap.slice();
-        const cellConfig: ComponentPropsCell  = newYourMap[indexRow][indexCell];
+        const cellConfig: ICellConfig = newYourMap[indexRow][indexCell];
 
         if (!cellConfig.isAttacked) {
             cellConfig.isAttacked = true;
@@ -93,7 +89,7 @@ export default class PlayingField extends Component {
         })
     }
 
-    protected _yourMapClickHandler(indexRow: number, indexCell: number, cellValue: string): void {
+    protected _yourMapClickHandler(indexRow: number, indexCell: number): void {
         if (this.state.stageOfPlacement) {
             let resValidateMap: IResultValidate;
             let newYourMap = this.state.yourMap.slice();
@@ -113,9 +109,10 @@ export default class PlayingField extends Component {
         }
     }
 
-    protected _enemyMapClickHandler(indexRow: number, indexCell: number, cellValue: string, event: SyntheticEvent): void {
+    protected _enemyMapClickHandler(indexRow: number, indexCell: number, cellValue: ICellConfig, event: MouseEvent<HTMLDivElement>): void {
         if (!this.state.stageOfPlacement && this.state.isYourMove && !this.state.enemyMap[indexRow][indexCell].isAttacked) {
-            const targetEvent = event.target;
+            // @ts-ignore
+            const targetEvent: Element = event.target;
 
             this.state.isYourMove = null;
             this.props.onClick(...arguments).then(({withShip, shipIsWasDestroyed}) => {
